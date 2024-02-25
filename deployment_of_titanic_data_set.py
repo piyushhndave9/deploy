@@ -40,38 +40,7 @@ from sklearn.metrics import accuracy_score
 # Make predictions on the test set
 y_pred = model.predict(X_test)
 
-# Evaluate the model
-accuracy = accuracy_score(y_test, y_pred)
-print("Accuracy:", accuracy)
 
-import joblib
 
-# Save the trained model to a file
-joblib.dump(model, "titanic_model.pkl")
 
-import joblib
-from flask import jsonify
-
-def predict_survival(request):
-    # Load the trained model
-    model = joblib.load("gs://your-bucket-name/titanic_model.pkl")
-
-    # Extract features from the request
-    features = request.json["features"]
-
-    # Make predictions
-    prediction = model.predict([features])
-
-    # Return the prediction
-    return jsonify({"prediction": prediction.tolist()})
-
-from google.colab import drive
-drive.mount('/content/drive')
-
-X.head()
-
-# Example inference code
-new_data = [[3,10.0,71.50,1,1,1]] # Example input data
-predictions = model.predict(new_data)
-print(predictions)
 
